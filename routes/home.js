@@ -3,6 +3,7 @@ var router = express.Router();
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
 var middleware = require('../config/middleware');
+var models = require('../config/models');
 
 router.get('/', function(req, res, next) {
   var csss = [
@@ -24,7 +25,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/listar', middleware.tiempo(5) ,function(req, res, next) {
-  res.send('lista');
+  models.Blog.find({},function(err, blogs){
+    res.send(JSON.stringify(blogs));
+  });
 });
 
 module.exports = router;
