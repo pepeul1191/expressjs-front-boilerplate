@@ -1,0 +1,17 @@
+logs
+*.log
+pids
+*.pid
+*.seed
+lib-cov
+coverage
+.grunt
+.lock-wscript
+build/Release
+node_modules
+npm-debug.log
+package-lock.json
+/public/bower_components
+/public/dist
+.DS_Store
+*.ods#
