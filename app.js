@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //use middleware
-app.use(middleware.preResponse);
+app.use(middleware.preResponse());
 //mount the routes
 app.use('/', home);
 app.use('/users', users);

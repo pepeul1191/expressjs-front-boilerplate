@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
+var middleware = require('../config/middleware');
 
 router.get('/', function(req, res, next) {
   var csss = [
@@ -20,6 +21,10 @@ router.get('/', function(req, res, next) {
     jss: jss,
   };
   res.render('home/index', locals);
+});
+
+router.get('/listar', middleware.tiempo(5) ,function(req, res, next) {
+  res.send('lista');
 });
 
 module.exports = router;
