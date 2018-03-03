@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var middleware = require('./config/middleware');
 // routes
 var home = require('./routes/home');
 var users = require('./routes/users');
@@ -18,6 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//use middleware
+app.use(middleware.preResponse);
 //mount the routes
 app.use('/', home);
 app.use('/users', users);
