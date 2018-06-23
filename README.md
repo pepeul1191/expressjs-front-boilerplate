@@ -17,3 +17,4 @@ Fuentes:
 + https://github.com/expressjs/session
 + https://techoverflow.net/2017/08/12/using-nodemon-without-a-global-installation/
 + https://stackoverflow.com/questions/41913086/nodemon-ignore-directory/41913195
++ http://unirest.io/nodejs.html

@@ -6,7 +6,7 @@ var errorHelper = require('../helpers/error');
 var middleware = require('../config/middleware');
 
 router.get('/access/:numero_error', function(req, res, next) {
-  if (req.session.errorMethod == 'GET'){
+  if (req.method == 'GET'){
     var locals = {
       constants: constants.data,
       title: 'Accesos',

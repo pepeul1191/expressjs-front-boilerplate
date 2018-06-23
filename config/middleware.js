@@ -11,8 +11,30 @@ function preResponse(){
 
 function error404(){
   return function (req, res, next) {
-    req.session.errorMethod = req.method;
-    res.redirect('/error/access/404');
+    if ('GET' == req.method){
+      var locals = {
+        constants: constants.data,
+        title: 'Accesos',
+        helpers: helpers,
+        csss: errorHelper.indexCss(),
+        jss: errorHelper.indexJs(),
+        error: {
+          numero: 404,
+          mensaje: 'Archivo no encontrado',
+          descripcion: 'La página que busca no se encuentra en el servidor',
+          icono: 'fa fa-exclamation-triangle'
+        }
+      };
+      res.status(404).render('error/access', locals);
+    }else{
+      var rpta = JSON.stringify({
+          tipo_mensaje: 'error',
+          mensaje: [
+            'Recurso no encontrado',
+            'El recurso que busca no se encuentra en el servidor'
+        ]});
+      res.status(404).send(rpta);
+    }
   }
 }
 

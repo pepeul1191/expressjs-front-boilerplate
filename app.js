@@ -9,6 +9,7 @@ var middleware = require('./config/middleware');
 // routes
 var home = require('./routes/home');
 var accesos = require('./routes/accesos');
+var sistema = require('./routes/sistema');
 var error = require('./routes/error');
 var app = express();
 // view engine setup
@@ -27,6 +28,7 @@ app.use(middleware.preResponse());
 //mount the routes
 app.use('/', home);
 app.use('/accesos', accesos);
+app.use('/sistema', sistema);
 app.use('/error', error);
 // catch 404 and forward to error handler
 app.use(middleware.error404());
