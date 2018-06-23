@@ -8,7 +8,6 @@ var session = require('express-session');
 var middleware = require('./config/middleware');
 // routes
 var home = require('./routes/home');
-var users = require('./routes/users');
 var accesos = require('./routes/accesos');
 var app = express();
 // view engine setup
@@ -26,14 +25,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(middleware.preResponse());
 //mount the routes
 app.use('/', home);
-app.use('/users', users);
 app.use('/accesos', accesos);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
+app.use(middleware.error404());
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
