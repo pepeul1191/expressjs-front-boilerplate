@@ -9,6 +9,7 @@ var middleware = require('./config/middleware');
 // routes
 var home = require('./routes/home');
 var users = require('./routes/users');
+var accesos = require('./routes/accesos');
 var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,6 +27,7 @@ app.use(middleware.preResponse());
 //mount the routes
 app.use('/', home);
 app.use('/users', users);
+app.use('/accesos', accesos);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
