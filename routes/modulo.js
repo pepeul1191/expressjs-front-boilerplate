@@ -3,8 +3,9 @@ var unirest = require('unirest');
 var constants = require('../config/constants');
 var router = express.Router();
 
-router.get('/listar', function(req, res, next) {
-  unirest.get(constants.data.accesos.url + 'sistema/listar')
+router.get('/listar/:modulo_id', function(req, res, next) {
+  var modulo_id = req.params.modulo_id;
+  unirest.get(constants.data.accesos.url + 'modulo/listar/' +  modulo_id)
     .headers({
       [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
     })
@@ -17,18 +18,19 @@ router.get('/listar', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Error: No se puede obtener la lista de sistemas',
+             'Error: No se puede obtener la lista de módulos de un sistema',
              'Error de comunicación con el servicio de accesos'
-           ]});
+           ]
+         });
       }else if(response.status == 404){
         status = response.status;
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Operación de listado de sistemas no disponible en el servicio de accesos',
+             'Operación de listado de módulos de un sistema no disponible en el servicio de accesos',
              'Error 404: Recurso no encontrado'
-           ]
-         });
+           ]}
+         );
       }else{
         status = response.status;
         body = response.body;
@@ -39,7 +41,7 @@ router.get('/listar', function(req, res, next) {
 
 router.post('/guardar', function(req, res, next) {
   var data = req.body.data;
-  unirest.post(constants.data.accesos.url + 'sistema/guardar')
+  unirest.post(constants.data.accesos.url + 'modulo/guardar')
     .headers({
       [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
     })
@@ -63,7 +65,7 @@ router.post('/guardar', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Operación de guardado de cambios de los sistemas no disponible en el servicio de accesos',
+             'Operación de guardado de cambios de los módulos no disponible en el servicio de accesos',
              'Error 404: Recurso no encontrado'
            ]
          });

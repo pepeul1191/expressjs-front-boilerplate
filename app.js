@@ -11,6 +11,7 @@ var login = require('./routes/login');
 var home = require('./routes/home');
 var accesos = require('./routes/accesos');
 var sistema = require('./routes/sistema');
+var modulo = require('./routes/modulo');
 var error = require('./routes/error');
 var app = express();
 // view engine setup
@@ -31,6 +32,7 @@ app.use('/', home);
 app.use('/login', login);
 app.use('/accesos', accesos);
 app.use('/sistema', sistema);
+app.use('/modulo', modulo);
 app.use('/error', error);
 // catch 404 and forward to error handler
 app.use(middleware.error404());
