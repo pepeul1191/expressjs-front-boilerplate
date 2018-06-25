@@ -10,8 +10,30 @@ router.get('/listar', function(req, res, next) {
     })
     .send()
     .end(function (response) {
-      var status = response.status;
-      var body = response.body;
+      var status = '';
+      var body = '';
+      if(response.status === undefined || response.status === null){
+        status = 500;
+        body = JSON.stringify({
+          tipo_mensaje: 'error',
+           mensaje: [
+             'Se ha producido un error en comunicarse con el servicio de accesos',
+             'Error 500'
+           ]
+         });
+      }else if(response.status == 404){
+        status = response.status;
+        body = JSON.stringify({
+          tipo_mensaje: 'error',
+           mensaje: [
+             'Recuso no encontrado en el servicio de accesos',
+             'Error 404'
+           ]}
+         );
+      }else{
+        status = response.status;
+        body = response.body;
+      }
       res.status(status).send(body);
     });
 });
@@ -26,8 +48,30 @@ router.post('/guardar', function(req, res, next) {
       'data': data,
     })
     .end(function (response) {
-      var status = response.status;
-      var body = response.body;
+      var status = '';
+      var body = '';
+      if(response.status === undefined || response.status === null){
+        status = 500;
+        body = JSON.stringify({
+          tipo_mensaje: 'error',
+           mensaje: [
+             'Se ha producido un error en comunicarse con el servicio de accesos',
+             'Error 500'
+           ]
+         });
+      }else if(response.status == 404){
+        status = response.status;
+        body = JSON.stringify({
+          tipo_mensaje: 'error',
+           mensaje: [
+             'Recuso no encontrado en el servicio de accesos',
+             'Error 404'
+           ]}
+         );
+      }else{
+        status = response.status;
+        body = response.body;
+      }
       res.status(status).send(body);
     });
 });
