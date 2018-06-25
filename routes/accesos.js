@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
-var accesosHelper = require('../helpers/accesos');
+var accesosHelper = require('../helpers/accesos_helper');
 var middleware = require('../config/middleware');
 
 router.get('/', function(req, res, next) {

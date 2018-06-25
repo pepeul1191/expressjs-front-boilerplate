@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
-var errorHelper = require('../helpers/error');
+var errorHelper = require('../helpers/error_helper');
 var middleware = require('../config/middleware');
 
 router.get('/access/:numero_error', function(req, res, next) {

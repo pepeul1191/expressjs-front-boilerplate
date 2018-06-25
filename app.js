@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var middleware = require('./config/middleware');
 // routes
+var login = require('./routes/login');
 var home = require('./routes/home');
 var accesos = require('./routes/accesos');
 var sistema = require('./routes/sistema');
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(middleware.preResponse());
 //mount the routes
 app.use('/', home);
+app.use('/login', login);
 app.use('/accesos', accesos);
 app.use('/sistema', sistema);
 app.use('/error', error);

@@ -1,6 +1,6 @@
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
-var errorHelper = require('../helpers/error');
+var errorHelper = require('../helpers/error_helper');
 
 function preResponse(){
   return function (req, res, next) {
