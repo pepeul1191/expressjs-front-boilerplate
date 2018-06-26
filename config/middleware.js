@@ -59,6 +59,21 @@ function sessionTrue(){
   }
 }
 
+function sessionFalse(){
+  return function (req, res, next) {
+    if (constants.data.ambiente_session == 'activo'){
+      var continuar = false;
+      if(req.session.estado == 'activo'){
+        continuar = true;
+      }
+      if (continuar == true){
+        return res.redirect('/accesos/');
+      }
+    }
+    return next();
+  }
+}
+
 function tiempo(numero){
   return function (req, res, next) {
     if (numero % 2 == 0){
@@ -72,4 +87,5 @@ function tiempo(numero){
 exports.preResponse= preResponse;
 exports.error404 = error404;
 exports.sessionTrue = sessionTrue;
+exports.sessionFalse = sessionFalse;
 exports.tiempo= tiempo;

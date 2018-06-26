@@ -6,7 +6,7 @@ var helpers = require('../config/helpers');
 var loginHelper = require('../helpers/login_helper');
 var middleware = require('../config/middleware');
 
-router.get('/', function(req, res, next) {
+router.get('/', middleware.sessionFalse(), function(req, res, next) {
   var locals = {
     constants: constants.data,
     title: 'Accesos',
