@@ -14,6 +14,7 @@ var sistema = require('./routes/sistema');
 var modulo = require('./routes/modulo');
 var subtitulo = require('./routes/subtitulo');
 var item = require('./routes/item');
+var permiso = require('./routes/permiso');
 var error = require('./routes/error');
 var app = express();
 // view engine setup
@@ -37,6 +38,7 @@ app.use('/sistema', sistema);
 app.use('/modulo', modulo);
 app.use('/subtitulo', subtitulo);
 app.use('/item', item);
+app.use('/permiso', permiso);
 app.use('/error', error);
 // catch 404 and forward to error handler
 app.use(middleware.error404());

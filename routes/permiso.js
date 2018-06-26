@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get('/listar/:sistema_id', function(req, res, next) {
   var sistema_id = req.params.sistema_id;
-  unirest.get(constants.data.accesos.url + 'modulo/listar/' +  sistema_id)
+  unirest.get(constants.data.accesos.url + 'permiso/listar/' +  sistema_id)
     .headers({
       [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
     })
@@ -18,7 +18,7 @@ router.get('/listar/:sistema_id', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Error: No se puede obtener la lista de módulos de un sistema',
+             'Error: No se puede obtener la lista de permisos de un sistema',
              'Error de comunicación con el servicio de accesos'
            ]
          });
@@ -27,7 +27,7 @@ router.get('/listar/:sistema_id', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Operación de listado de módulos de un sistema no disponible en el servicio de accesos',
+             'Operación de listado de permisos de un sistema no disponible en el servicio de accesos',
              'Error 404: Recurso no encontrado'
            ]}
          );
@@ -41,7 +41,7 @@ router.get('/listar/:sistema_id', function(req, res, next) {
 
 router.post('/guardar', function(req, res, next) {
   var data = req.body.data;
-  unirest.post(constants.data.accesos.url + 'modulo/guardar')
+  unirest.post(constants.data.accesos.url + 'permiso/guardar')
     .headers({
       [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
     })
@@ -56,7 +56,7 @@ router.post('/guardar', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Error: No se puede guardar los cambios en los módulos',
+             'Error: No se puede guardar los cambios en los permisos',
              'Error de comunicación con el servicio de accesos'
            ]
          });
@@ -65,7 +65,7 @@ router.post('/guardar', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Operación de guardado de cambios de los módulos no disponible en el servicio de accesos',
+             'Operación de guardado de cambios de los permisos no disponible en el servicio de accesos',
              'Error 404: Recurso no encontrado'
            ]
          });
