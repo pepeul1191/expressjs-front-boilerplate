@@ -6,23 +6,7 @@ var middleware = require('../config/middleware');
 var models = require('../config/models');
 
 router.get('/', function(req, res, next) {
-  var csss = [
-    'bower_components/bootstrap/dist/css/bootstrap.min',
-    'bower_components/font-awesome/css/font-awesome.min',
-    'css/style'
-  ];
-  var jss = [
-    'bower_components/jquery/dist/jquery.min',
-    'bower_components/bootstrap/dist/js/bootstrap.min'
-  ];
-  var locals = {
-    constants: constants.data,
-    title: 'Test EJS Title',
-    helpers: helpers,
-    csss: csss,
-    jss: jss,
-  };
-  res.render('home/index', locals);
+  res.redirect('/login');
 });
 
 router.get('/listar', middleware.tiempo(5) ,function(req, res, next) {

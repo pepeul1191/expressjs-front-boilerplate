@@ -1,4 +1,5 @@
 var express = require('express');
+var unirest = require('unirest');
 var router = express.Router();
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
@@ -13,14 +14,67 @@ router.get('/', function(req, res, next) {
     csss: loginHelper.indexCss(),
     jss: loginHelper.indexJs(),
     mensaje: '',
-    error: {
-      numero: 404,
-      mensaje: 'Archivo no encontrado',
-      descripcion: 'La página que busca no se encuentra en el servidor',
-      icono: 'fa fa-exclamation-triangle'
-    }
   };
   res.render('login/index', locals);
+});
+
+
+router.post('/acceder', function(req, res, next) {
+  var req_csrf_val = req.body[constants.data.csrf.key];
+  var usuario = req.body.usuario;
+  var contrasenia = req.body.contrasenia;
+  var body = '';
+  unirest.post(constants.data.accesos.url + 'usuario/validar')
+    .headers({
+      [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
+    })
+    .send({
+      'usuario': usuario,
+      'contrasenia': contrasenia,
+    })
+    .end(function (response) {
+      var status = '';
+      var mensaje = '';
+      var error = true;
+      if(response.status === undefined || response.status === null){
+        status = 500;
+        mensaje = 'Error de comunicación con el servicio de accesos';
+        body = response.body;
+      }else if(response.status == 404){
+        status = response.status;
+        mensaje = 'Operación de login no disponible en el servicio de accesos';
+        body = response.body;
+      }else if(response.status == 500){
+        status = response.status;
+        mensaje = 'Ha ocurrido un error en el servicio de accesos';
+        body = response.body;
+      }else{
+        status = response.status;
+        body = response.body;
+        if(body == '1'){
+          error = false;
+        }else{
+          mensaje = 'Usuario y/o contraseña no válidos';
+        }
+      }
+      if(error == true){
+        console.log("**** INICIO - ERROR EN LOGIN ***");
+        console.log(mensaje);
+        console.log(body);
+        console.log("**** FIN ***");
+        var locals = {
+          constants: constants.data,
+          title: 'Accesos',
+          helpers: helpers,
+          csss: loginHelper.indexCss(),
+          jss: loginHelper.indexJs(),
+          mensaje: mensaje,
+        };
+        res.render('login/index', locals);
+      }else{
+        res.redirect('/accesos/');
+      }
+    });
 });
 
 module.exports = router;
