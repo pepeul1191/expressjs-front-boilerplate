@@ -36,6 +36,7 @@ app.use('/accesos', accesos);
 app.use('/sistema', sistema);
 app.use('/modulo', modulo);
 app.use('/subtitulo', subtitulo);
+app.use('/item', item);
 app.use('/error', error);
 // catch 404 and forward to error handler
 app.use(middleware.error404());

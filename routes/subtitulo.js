@@ -3,9 +3,9 @@ var unirest = require('unirest');
 var constants = require('../config/constants');
 var router = express.Router();
 
-router.get('/listar/:subtitulo', function(req, res, next) {
-  var subtitulo = req.params.subtitulo;
-  unirest.get(constants.data.accesos.url + 'subtitulo/listar/' +  subtitulo)
+router.get('/listar/:modulo_id', function(req, res, next) {
+  var modulo_id = req.params.modulo_id;
+  unirest.get(constants.data.accesos.url + 'subtitulo/listar/' +  modulo_id)
     .headers({
       [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
     })
@@ -65,7 +65,7 @@ router.post('/guardar', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Operación de guardado de cambios de los módulos no disponible en el servicio de accesos',
+             'Operación de guardado de cambios de los subtítulos no disponible en el servicio de accesos',
              'Error 404: Recurso no encontrado'
            ]
          });
