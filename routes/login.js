@@ -72,9 +72,19 @@ router.post('/acceder', function(req, res, next) {
         };
         res.render('login/index', locals);
       }else{
+        req.session.tiempo = new Date().toLocaleTimeString();
+        req.session.usuario = usuario;
+        req.session.estado = 'activo';
         res.redirect('/accesos/');
       }
     });
+});
+
+router.get('/ver', function(req, res, next) {
+  body = 'Usuario: ' + req.session.usuario + '<br>' +
+    'Estado: ' + req.session.estado + '<br>' +
+    'Momento: ' + req.session.tiempo;
+  res.status(200).send(body);
 });
 
 module.exports = router;
