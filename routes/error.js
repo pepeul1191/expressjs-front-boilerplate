@@ -3,7 +3,24 @@ var router = express.Router();
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
 var errorHelper = require('../helpers/error_helper');
-var middleware = require('../config/middleware');
+
+router.get('/access/8080', function(req, res, next) {
+  var locals = {
+    constants: constants.data,
+    title: 'Accesos',
+    helpers: helpers,
+    csss: errorHelper.indexCss(),
+    jss: errorHelper.indexJs(),
+    error: {
+      numero: 8080,
+      mensaje: 'Error de Sesión',
+      descripcion: req.session.mensaje_error,
+      icono: 'fa fa-exclamation-triangle'
+    }
+  };
+  res.status(500).render('error/access', locals);
+  res.end('Cannot ' + req.method + ' ' + req.url);
+});
 
 router.get('/access/:numero_error', function(req, res, next) {
   if (req.method == 'GET'){

@@ -38,6 +38,27 @@ function error404(){
   }
 }
 
+function sessionTrue(){
+  return function (req, res, next) {
+    if (constants.data.ambiente_session == 'activo'){
+      var continuar = false;
+      if(req.session.estado == 'inactivo'){
+        req.session.mensaje_error = 'Su tiempo de sesión ha terminado';
+      }
+      if(req.session.estado === undefined){
+        req.session.mensaje_error = 'Nececita estar logeuado';
+      }
+      if(req.session.estado == 'activo'){
+        continuar = true;
+      }
+      if (continuar == false){
+        return res.redirect('/error/access/8080');
+      }
+    }
+    return next();
+  }
+}
+
 function tiempo(numero){
   return function (req, res, next) {
     if (numero % 2 == 0){
@@ -49,5 +70,6 @@ function tiempo(numero){
 }
 
 exports.preResponse= preResponse;
-exports.tiempo= tiempo;
 exports.error404 = error404;
+exports.sessionTrue = sessionTrue;
+exports.tiempo= tiempo;

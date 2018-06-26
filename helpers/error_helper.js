@@ -2,7 +2,7 @@ var constants = require('../config/constants');
 
 var indexCss = function() {
   var rpta = [];
-  if(constants.data.ambiente == 'desarrollo'){
+  if(constants.data.ambiente_static == 'desarrollo'){
     rpta = [
       'bower_components/bootstrap/dist/css/bootstrap.min',
       'bower_components/font-awesome/css/font-awesome.min',
@@ -11,7 +11,7 @@ var indexCss = function() {
       'assets/css/error',
     ];
   }
-  if(constants.data.ambiente == 'produccion'){
+  if(constants.data.ambiente_static == 'produccion'){
     rpta = [
       'dist/test.min'
     ];
@@ -20,11 +20,11 @@ var indexCss = function() {
 }
 
 var indexJs = function() {
-  if(constants.data.ambiente == 'desarrollo'){
+  if(constants.data.ambiente_static == 'desarrollo'){
     rpta = [
     ];
   }
-  if(constants.data.ambiente == 'produccion'){
+  if(constants.data.ambiente_static == 'produccion'){
     rpta = [
     ];
   }

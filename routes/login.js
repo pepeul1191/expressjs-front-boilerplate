@@ -87,4 +87,9 @@ router.get('/ver', function(req, res, next) {
   res.status(200).send(body);
 });
 
+router.get('/cerrar', function(req, res, next) {
+  req.session.destroy();
+  res.redirect('/login');
+});
+
 module.exports = router;
