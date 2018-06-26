@@ -1,9 +1,10 @@
 var express = require('express');
 var unirest = require('unirest');
 var constants = require('../config/constants');
+var middleware = require('../config/middleware');
 var router = express.Router();
 
-router.get('/listar/:sistema_id', function(req, res, next) {
+router.get('/listar/:sistema_id', middleware.sessionTrue(), middleware.checkCSRF(), function(req, res, next) {
   var sistema_id = req.params.sistema_id;
   unirest.get(constants.data.accesos.url + 'modulo/listar/' +  sistema_id)
     .headers({
@@ -39,7 +40,7 @@ router.get('/listar/:sistema_id', function(req, res, next) {
     });
 });
 
-router.post('/guardar', function(req, res, next) {
+router.post('/guardar', middleware.sessionTrue(), middleware.checkCSRF(), function(req, res, next) {
   var data = req.body.data;
   unirest.post(constants.data.accesos.url + 'modulo/guardar')
     .headers({

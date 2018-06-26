@@ -74,6 +74,33 @@ function sessionFalse(){
   }
 }
 
+function checkCSRF(){
+  return function (req, res, next) {
+    if (constants.data.ambiente_csrf == 'activo'){
+      var continuar = true;
+      var mensaje = '';
+      request_header = req.get(constants.data.csrf.key);
+      if(request_header === undefined){
+        continuar = false;
+        mensaje = 'CSRF Token error';
+      } else if(request_header != constants.data.csrf.secret){
+        continuar = false;
+        mensaje = 'CSRF Token key error';
+      }
+      if (continuar == false){
+        var rpta = JSON.stringify({
+            tipo_mensaje: 'error',
+            mensaje: [
+              'No se puede acceder al recurso',
+              mensaje
+          ]});
+        return res.status(500).send(rpta);
+      }
+    }
+    return next();
+  }
+}
+
 function tiempo(numero){
   return function (req, res, next) {
     if (numero % 2 == 0){
@@ -88,4 +115,5 @@ exports.preResponse= preResponse;
 exports.error404 = error404;
 exports.sessionTrue = sessionTrue;
 exports.sessionFalse = sessionFalse;
+exports.checkCSRF = checkCSRF;
 exports.tiempo= tiempo;

@@ -1,9 +1,10 @@
 var express = require('express');
 var unirest = require('unirest');
 var constants = require('../config/constants');
+var middleware = require('../config/middleware');
 var router = express.Router();
 
-router.get('/listar', function(req, res, next) {
+router.get('/listar', middleware.sessionTrue(), middleware.checkCSRF(), function(req, res, next) {
   unirest.get(constants.data.accesos.url + 'usuario/listar')
     .headers({
       [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,

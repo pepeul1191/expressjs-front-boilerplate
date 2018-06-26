@@ -4,7 +4,7 @@ var constants = require('../config/constants');
 var middleware = require('../config/middleware');
 var router = express.Router();
 
-router.get('/listar', middleware.sessionTrue(), function(req, res, next) {
+router.get('/listar', middleware.sessionTrue(), middleware.checkCSRF(), function(req, res, next) {
   unirest.get(constants.data.accesos.url + 'sistema/listar')
     .headers({
       [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
@@ -38,7 +38,7 @@ router.get('/listar', middleware.sessionTrue(), function(req, res, next) {
     });
 });
 
-router.post('/guardar', function(req, res, next) {
+router.post('/guardar', middleware.sessionTrue(), middleware.checkCSRF(),function(req, res, next) {
   var data = req.body.data;
   unirest.post(constants.data.accesos.url + 'sistema/guardar')
     .headers({
