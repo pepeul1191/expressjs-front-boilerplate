@@ -7,7 +7,7 @@ var errorHelper = require('../helpers/error_helper');
 router.get('/access/8080', function(req, res, next) {
   var locals = {
     constants: constants.data,
-    title: 'Accesos',
+    title: 'Error',
     helpers: helpers,
     csss: errorHelper.indexCss(),
     jss: errorHelper.indexJs(),
@@ -26,7 +26,7 @@ router.get('/access/:numero_error', function(req, res, next) {
   if (req.method == 'GET'){
     var locals = {
       constants: constants.data,
-      title: 'Accesos',
+      title: 'Error',
       helpers: helpers,
       csss: errorHelper.indexCss(),
       jss: errorHelper.indexJs(),

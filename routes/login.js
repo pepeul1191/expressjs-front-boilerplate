@@ -9,7 +9,7 @@ var middleware = require('../config/middleware');
 router.get('/', middleware.sessionFalse(), function(req, res, next) {
   var locals = {
     constants: constants.data,
-    title: 'Accesos',
+    title: 'Bienvenido',
     helpers: helpers,
     csss: loginHelper.indexCss(),
     jss: loginHelper.indexJs(),
@@ -32,7 +32,7 @@ router.post('/acceder', function(req, res, next) {
     var mensaje = 'Error en Token CSRF POST request';
     var locals = {
       constants: constants.data,
-      title: 'Accesos',
+      title: 'Bienvenido',
       helpers: helpers,
       csss: loginHelper.indexCss(),
       jss: loginHelper.indexJs(),
@@ -80,7 +80,7 @@ router.post('/acceder', function(req, res, next) {
           console.log("**** FIN ***");
           var locals = {
             constants: constants.data,
-            title: 'Accesos',
+            title: 'Bienvenido',
             helpers: helpers,
             csss: loginHelper.indexCss(),
             jss: loginHelper.indexJs(),

@@ -14,7 +14,7 @@ function error404(){
     if ('GET' == req.method){
       var locals = {
         constants: constants.data,
-        title: 'Accesos',
+        title: 'Error',
         helpers: helpers,
         csss: errorHelper.indexCss(),
         jss: errorHelper.indexJs(),
