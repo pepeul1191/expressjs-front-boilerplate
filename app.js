@@ -16,6 +16,7 @@ var subtitulo = require('./routes/subtitulo');
 var item = require('./routes/item');
 var permiso = require('./routes/permiso');
 var rol = require('./routes/rol');
+var usuario = require('./routes/usuario');
 var error = require('./routes/error');
 var app = express();
 // view engine setup
@@ -41,6 +42,7 @@ app.use('/subtitulo', subtitulo);
 app.use('/item', item);
 app.use('/permiso', permiso);
 app.use('/rol', rol);
+app.use('/usuario', usuario);
 app.use('/error', error);
 // catch 404 and forward to error handler
 app.use(middleware.error404());
