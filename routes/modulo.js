@@ -56,7 +56,7 @@ router.post('/guardar', function(req, res, next) {
         body = JSON.stringify({
           tipo_mensaje: 'error',
            mensaje: [
-             'Error: No se puede guardar los cambios en los sistemas',
+             'Error: No se puede guardar los cambios en los módulos',
              'Error de comunicación con el servicio de accesos'
            ]
          });
