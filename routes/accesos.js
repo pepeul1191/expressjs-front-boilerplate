@@ -7,27 +7,6 @@ var accesosHelper = require('../helpers/accesos_helper');
 var middleware = require('../config/middleware');
 
 router.get('/', middleware.sessionTrue(), function(req, res, next) {
-  /*
-  var menuModulos = helpers.menuModulos();
-  var menuItems = helpers.menuItems('Accesos');
-  var locals = {
-    constants: constants.data,
-    title: 'Accesos',
-    helpers: helpers,
-    csss: accesosHelper.indexCss(),
-    jss: accesosHelper.indexJs(),
-    data: JSON.stringify({
-      modulo : 'Accesos',
-    }),
-    'menu': menuModulos,
-    items: menuItems,
-  };
-  console.log("--------------------------------------------");
-  console.log(menuItems);
-  console.log("--------------------------------------------");
-  console.log(menuModulos);
-  res.render('accesos/index', locals);
-  */
   async.parallel({
     menuModulos: function(callback) {
       helpers.menuModulos().then(function(result){
