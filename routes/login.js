@@ -1,5 +1,6 @@
 var express = require('express');
 var unirest = require('unirest');
+var async = require('async');
 var router = express.Router();
 var constants = require('../config/constants');
 var helpers = require('../config/helpers');
@@ -40,60 +41,97 @@ router.post('/acceder', function(req, res, next) {
     };
     res.render('login/index', locals);
   }else{
-    unirest.post(constants.data.accesos.url + 'usuario/validar')
-      .headers({
-        [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
-      })
-      .send({
-        'usuario': usuario,
-        'contrasenia': contrasenia,
-      })
-      .end(function (response) {
-        var status = '';
-        var mensaje = '';
-        var error = true;
-        if(response.status === undefined || response.status === null){
-          status = 500;
-          mensaje = 'Error de comunicación con el servicio de accesos';
-          body = response.body;
-        }else if(response.status == 404){
-          status = response.status;
-          mensaje = 'Operación de login no disponible en el servicio de accesos';
-          body = response.body;
-        }else if(response.status == 500){
-          status = response.status;
-          mensaje = 'Ha ocurrido un error en el servicio de accesos';
-          body = response.body;
+    var rpta = {
+      status: null,
+      body: null,
+    };
+    async.parallel({
+      validarUsuarioSistema: function(callback) {
+        loginHelper.validarUsuarioSistema(usuario).then(function(result){
+          callback(null, result);
+        })
+      },
+    }, function(err, results) {
+      if(typeof results.validarUsuarioSistema === 'object'){//hubo un error
+        console.log("**** INICIO - ERROR EN LOGIN (Comunicación con servicio al validar el usuario/sistema)***");
+        console.log(results.validarUsuarioSistema.body);
+        console.log("**** FIN ***");
+        var locals = {
+          constants: constants.data,
+          title: 'Bienvenido',
+          helpers: helpers,
+          csss: loginHelper.indexCss(),
+          jss: loginHelper.indexJs(),
+          mensaje: results.validarUsuarioSistema.body.mensaje[0],
+        };
+        res.status(500).render('login/index', locals);
+      }else if(results.validarUsuarioSistema == 1){
+        unirest.post(constants.data.accesos.url + 'usuario/validar')
+          .headers({
+            [constants.data.accesos.csrf_key]: constants.data.accesos.csrf_value,
+          })
+          .send({
+            'usuario': usuario,
+            'contrasenia': contrasenia,
+          })
+          .end(function (response) {
+            var status = '';
+            var mensaje = '';
+            var error = true;
+            if(response.status === undefined || response.status === null){
+              status = 500;
+              mensaje = 'Error de comunicación con el servicio de accesos';
+              body = response.body;
+            }else if(response.status == 404){
+              status = response.status;
+              mensaje = 'Operación de login no disponible en el servicio de accesos';
+              body = response.body;
+            }else if(response.status == 500){
+              status = response.status;
+              mensaje = 'Ha ocurrido un error en el servicio de accesos';
+              body = response.body;
+            }else{
+              status = response.status;
+              body = response.body;
+              if(body == '1'){
+                error = false;
+              }else{
+                mensaje = 'Usuario y/o contraseña no válidos';
+              }
+            }
+            if(error == true){
+              console.log("**** INICIO - ERROR EN LOGIN (Comunicación con servicio)***");
+              console.log(mensaje);
+              console.log(body);
+              console.log("**** FIN ***");
+              var locals = {
+                constants: constants.data,
+                title: 'Bienvenido',
+                helpers: helpers,
+                csss: loginHelper.indexCss(),
+                jss: loginHelper.indexJs(),
+                mensaje: mensaje,
+              };
+              res.status(500).render('login/index', locals);
+            }else{
+              req.session.tiempo = new Date().toLocaleTimeString();
+              req.session.usuario = usuario;
+              req.session.estado = 'activo';
+              res.redirect('/accesos/');
+            }
+          });
         }else{
-          status = response.status;
-          body = response.body;
-          if(body == '1'){
-            error = false;
-          }else{
-            mensaje = 'Usuario y/o contraseña no válidos';
-          }
-        }
-        if(error == true){
-          console.log("**** INICIO - ERROR EN LOGIN (Comunicación con servicio)***");
-          console.log(mensaje);
-          console.log(body);
-          console.log("**** FIN ***");
           var locals = {
             constants: constants.data,
             title: 'Bienvenido',
             helpers: helpers,
             csss: loginHelper.indexCss(),
             jss: loginHelper.indexJs(),
-            mensaje: mensaje,
+            mensaje: 'Usuario no tiene acceso a dicho sistema',
           };
-          res.render('login/index', locals);
-        }else{
-          req.session.tiempo = new Date().toLocaleTimeString();
-          req.session.usuario = usuario;
-          req.session.estado = 'activo';
-          res.redirect('/accesos/');
+          res.status(500).render('login/index', locals);
         }
-      });
+    });
   }
 });
 

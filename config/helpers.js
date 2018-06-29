@@ -63,7 +63,7 @@ var menuModulos = function() {
         resolve(rpta.body);
       }else{
         console.log(rpta.body);
-        reject(JSON.stringify([]));
+        resolve(JSON.stringify([]));
       }
     });
   });
@@ -113,7 +113,7 @@ var menuItems = function(moduloNombre) {
         resolve(rpta.body);
       }else{
         console.log(rpta.body);
-        reject(JSON.stringify([]));
+        resolve(JSON.stringify([]));
       }
     });
   });
