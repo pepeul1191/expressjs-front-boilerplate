@@ -5,6 +5,7 @@ var errorHelper = require('../helpers/error_helper');
 function preResponse(){
   return function (req, res, next) {
     res.set('Server', 'Ubuntu');
+    res.set('sistema_id', 1);
     return next();
   }
 }

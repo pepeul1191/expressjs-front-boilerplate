@@ -24,7 +24,7 @@ router.post('/acceder', function(req, res, next) {
   var usuario = req.body.usuario;
   var contrasenia = req.body.contrasenia;
   var body = '';
-  if(req_csrf_val != constants.data.accesos.csrf_value){
+  if(req_csrf_val != constants.data.csrf.secret){
     console.log("**** INICIO - ERROR EN LOGIN (CSRF token)***");
     console.log(mensaje);
     console.log(body);
